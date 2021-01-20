@@ -24,4 +24,17 @@ class MarketTest < Minitest::Test
 
     assert_equal [vendor], market.vendors
   end
+
+  def test_vendor_names
+    market = Market.new("South Pearl Street Farmers Market")
+    vendor1 = mock
+    vendor1.stubs(:name).returns("Vendor 1")
+    market.add_vendor(vendor1)
+
+    vendor2 = mock
+    vendor2.stubs(:name).returns("Vendor 2")
+    market.add_vendor(vendor2)
+
+    assert_equal ["Vendor 1", "Vendor 2"], market.vendor_names
+  end
 end
