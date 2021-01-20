@@ -20,4 +20,16 @@ class Market
       vendor.check_stock(item) > 0
     end
   end
+
+  def total_inventory
+    items.each_with_object({}) do |item, hash|
+      hash[item] = ""
+    end
+  end
+
+  def items
+    @vendors.flat_map do |vendor|
+      vendor.inventory.keys
+    end.uniq
+  end
 end
