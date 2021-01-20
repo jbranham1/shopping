@@ -33,6 +33,13 @@ class Market
     end.uniq
   end
 
+  def sorted_item_list
+    items.map(&:name).sort
+  end
+
+  def overstocked_items
+  end
+
   def item_info(item)
     {
       quantity: quantity_of_item(item),
