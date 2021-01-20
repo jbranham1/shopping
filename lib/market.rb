@@ -23,7 +23,7 @@ class Market
     @vendors.map(&:name)
   end
 
-  def vendors_that_sell(item)
+  def vendors_that_sell?(item)
     @vendors.select do |vendor|
       vendor.check_stock(item) > 0
     end
@@ -36,7 +36,7 @@ class Market
   end
 
   def items
-    @vendors.flat_map do |vendor|
+    @items ||= @vendors.flat_map do |vendor|
       vendor.items
     end.uniq
   end
@@ -44,7 +44,7 @@ class Market
   def item_info(item)
     {
       quantity: quantity_of_item(item),
-      vendors: vendors_that_sell(item)
+      vendors: vendors_that_sell?(item)
     }
   end
 
@@ -54,7 +54,7 @@ class Market
 
   def overstocked_items
     items.select do |item|
-      vendors_that_sell(item).count > 1 && quantity_of_item(item) > 50
+      vendors_that_sell?(item).count > 1 && quantity_of_item(item) > 50
     end
   end
 
@@ -68,7 +68,7 @@ class Market
   end
 
   def sell_item(item, quantity)
-    vendors_that_sell(item).reduce(quantity) do |sell_amount, vendor|
+    vendors_that_sell?(item).reduce(quantity) do |sell_amount, vendor|
       stock = vendor.check_stock(item)
       if sell_amount > stock
         amount_to_sell = stock
@@ -83,7 +83,7 @@ class Market
   private
 
   def quantity_of_item(item)
-    vendors_that_sell(item).sum do |vendor|
+    vendors_that_sell?(item).sum do |vendor|
       vendor.check_stock(item)
     end
   end
