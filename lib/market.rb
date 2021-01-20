@@ -23,7 +23,7 @@ class Market
 
   def total_inventory
     items.each_with_object({}) do |item, hash|
-      hash[item] = ""
+      hash[item] = item_info(item)
     end
   end
 
@@ -35,8 +35,16 @@ class Market
 
   def item_info(item)
     {
-      quantity: 0,
+      quantity: quantity_of_item(item),
       vendors: vendors_that_sell(item)
     }
+  end
+
+  private
+
+  def quantity_of_item(item)
+    vendors_that_sell(item).sum do |vendor|
+      vendor.check_stock(item)
+    end
   end
 end

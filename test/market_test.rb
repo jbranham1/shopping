@@ -75,15 +75,28 @@ class MarketTest < Minitest::Test
     vendor2.stock(item3, 25)
     vendor3 = Vendor.new("Palisade Peach Shack")
     vendor3.stock(item1, 65)
+    vendor3.stock(item3, 10)
     market.add_vendor(vendor1)
     market.add_vendor(vendor2)
     market.add_vendor(vendor3)
 
     inventory_hash = {
-      item1 => "",
-      item2 => "",
-      item4 => "",
-      item3 => ""
+      item1 => {
+        quantity: 100,
+        vendors: [vendor1, vendor3]
+      },
+      item2 => {
+        quantity: 7,
+        vendors: [vendor1]
+      },
+      item4 => {
+        quantity: 50,
+        vendors: [vendor2]
+      },
+      item3 => {
+        quantity: 35,
+        vendors: [vendor2, vendor3]
+      }
     }
 
     assert_equal inventory_hash, market.total_inventory
