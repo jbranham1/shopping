@@ -197,4 +197,11 @@ class MarketTest < Minitest::Test
     assert_equal 0, vendor1.check_stock(item1)
     assert_equal 55, vendor3.check_stock(item1)
   end
+
+  def test_date
+    market = Market.new("South Pearl Street Farmers Market")
+    market.expects(:date).returns("24/02/2020")
+
+    assert_equal "24/02/2020", market.date
+  end
 end
