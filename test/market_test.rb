@@ -181,4 +181,20 @@ class MarketTest < Minitest::Test
 
     assert_equal [item1], market.overstocked_items
   end
+
+  def test_sell
+    market = Market.new("South Pearl Street Farmers Market")
+    vendor1 = Vendor.new("Rocky Mountain Fresh")
+    item1 = Item.new({name: 'Peach', price: "$0.75"})
+    vendor1.stock(item1, 35)
+    vendor3 = Vendor.new("Palisade Peach Shack")
+    vendor3.stock(item1, 65)
+    market.add_vendor(vendor1)
+    market.add_vendor(vendor3)
+
+    assert_equal false, market.sell(item1, 200)
+    assert_equal true, market.sell(item1, 45)
+    assert_equal 0, vendor1.check_stock(item1)
+    assert_equal 55, vendor3.check_stock(item1)
+  end
 end

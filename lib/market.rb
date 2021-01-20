@@ -50,6 +50,28 @@ class Market
     end
   end
 
+  def sell(item, quantity)
+    if quantity > quantity_of_item(item)
+      false
+    else
+      sell_item(item, quantity)
+      true
+    end
+  end
+
+  def sell_item(item, quantity)
+    vendors_that_sell(item).reduce(quantity) do |sell_amount, vendor|
+      stock = vendor.check_stock(item)
+      if sell_amount > stock
+        amount_to_sell = stock
+      else
+        amount_to_sell = sell_amount
+      end
+      vendor.stock(item, -amount_to_sell)
+      sell_amount -= amount_to_sell
+    end
+  end
+
   private
 
   def quantity_of_item(item)
