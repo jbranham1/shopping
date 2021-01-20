@@ -1,6 +1,7 @@
 require 'minitest/pride'
 require 'minitest/autorun'
 require './lib/vendor'
+require './lib/item'
 require 'mocha/minitest'
 
 class VendorTest < Minitest::Test
@@ -35,5 +36,15 @@ class VendorTest < Minitest::Test
     vendor.stock(item, 25)
     inventory_hash = {item => 55}
     assert_equal inventory_hash, vendor.inventory
+  end
+
+  def test_potential_revenue
+    vendor1 = Vendor.new("Rocky Mountain Fresh")
+    item1 = Item.new({name: 'Peach', price: "$0.75"})
+    item2 = Item.new({name: 'Tomato', price: "$0.50"})
+    vendor1.stock(item1, 35)
+    vendor1.stock(item2, 7)
+
+    assert_equal 29.75, vendor1.potential_revenue
   end
 end
