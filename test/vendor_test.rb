@@ -8,4 +8,11 @@ class VendorTest < Minitest::Test
 
     assert_instance_of Vendor, vendor
   end
+
+  def test_it_has_readable_attributes
+    vendor = Vendor.new("Rocky Mountain Fresh")
+
+    assert_equal 'Rocky Mountain Fresh', vendor.name
+    assert_equal Hash.new, vendor.inventory
+  end
 end
