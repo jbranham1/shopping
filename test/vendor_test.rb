@@ -21,5 +21,18 @@ class VendorTest < Minitest::Test
     vendor = Vendor.new("Rocky Mountain Fresh")
     item = mock
     assert_equal 0, vendor.check_stock(item)
+
+    vendor.stock(item, 30)
+
+    assert_equal 30, vendor.check_stock(item)
+  end
+
+  def test_stock
+    vendor = Vendor.new("Rocky Mountain Fresh")
+    item = mock
+
+    vendor.stock(item, 30)
+    inventory_hash = {item => 30}
+    assert_equal inventory_hash, vendor.inventory
   end
 end
