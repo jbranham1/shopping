@@ -1,7 +1,6 @@
 require 'minitest/pride'
 require 'minitest/autorun'
 require './lib/vendor'
-require './lib/item'
 require 'mocha/minitest'
 
 class VendorTest < Minitest::Test
@@ -36,8 +35,12 @@ class VendorTest < Minitest::Test
 
   def test_potential_revenue
     vendor1 = Vendor.new("Rocky Mountain Fresh")
-    item1 = Item.new({name: 'Peach', price: "$0.75"})
-    item2 = Item.new({name: 'Tomato', price: "$0.50"})
+    item1 = mock
+    item2 = mock
+
+    item1.stubs(:price).returns(0.75)
+    item2.stubs(:price).returns(0.50)
+
     vendor1.stock(item1, 35)
     vendor1.stock(item2, 7)
 
@@ -46,8 +49,8 @@ class VendorTest < Minitest::Test
 
   def test_items
     vendor1 = Vendor.new("Rocky Mountain Fresh")
-    item1 = Item.new({name: 'Peach', price: "$0.75"})
-    item2 = Item.new({name: 'Tomato', price: "$0.50"})
+    item1 = mock
+    item2 = mock
     vendor1.stock(item1, 35)
     vendor1.stock(item2, 7)
 
