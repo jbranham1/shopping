@@ -20,4 +20,8 @@ class Vendor
       item.price * amount
     end.round(2)
   end
+
+  def items
+    @inventory.keys
+  end
 end

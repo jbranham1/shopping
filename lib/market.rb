@@ -29,7 +29,7 @@ class Market
 
   def items
     @vendors.flat_map do |vendor|
-      vendor.inventory.keys
+      vendor.items
     end.uniq
   end
 
