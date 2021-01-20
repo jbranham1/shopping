@@ -33,18 +33,21 @@ class Market
     end.uniq
   end
 
-  def sorted_item_list
-    items.map(&:name).sort
-  end
-
-  def overstocked_items
-  end
-
   def item_info(item)
     {
       quantity: quantity_of_item(item),
       vendors: vendors_that_sell(item)
     }
+  end
+
+  def sorted_item_list
+    items.map(&:name).sort
+  end
+
+  def overstocked_items
+    items.select do |item|
+      vendors_that_sell(item).count > 1 && quantity_of_item(item) > 50
+    end
   end
 
   private
