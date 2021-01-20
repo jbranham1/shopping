@@ -1,6 +1,7 @@
 require 'minitest/pride'
 require 'minitest/autorun'
 require './lib/vendor'
+require 'mocha/minitest'
 
 class VendorTest < Minitest::Test
   def test_it_exists
@@ -14,5 +15,11 @@ class VendorTest < Minitest::Test
 
     assert_equal 'Rocky Mountain Fresh', vendor.name
     assert_equal Hash.new, vendor.inventory
+  end
+
+  def test_check_stock
+    vendor = Vendor.new("Rocky Mountain Fresh")
+    item = mock
+    assert_equal 0, vendor.check_stock(item)
   end
 end
