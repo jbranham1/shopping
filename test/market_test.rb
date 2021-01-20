@@ -109,4 +109,21 @@ class MarketTest < Minitest::Test
 
     assert_equal [item1, item2, item4, item3], market.items
   end
+
+  def test_item_info
+    market = Market.new("South Pearl Street Farmers Market")
+    vendor1 = Vendor.new("Rocky Mountain Fresh")
+    item1 = Item.new({name: 'Peach', price: "$0.75"})
+    vendor1.stock(item1, 35)
+    vendor3 = Vendor.new("Palisade Peach Shack")
+    vendor3.stock(item1, 65)
+    market.add_vendor(vendor1)
+    market.add_vendor(vendor3)
+
+    info_hash = {
+      quantity: 100,
+      vendors: [vendor1, vendor3]
+    }
+    assert_equal info_hash, market.item_info(item1)
+  end
 end

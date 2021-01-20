@@ -32,4 +32,11 @@ class Market
       vendor.inventory.keys
     end.uniq
   end
+
+  def item_info(item)
+    {
+      quantity: 0,
+      vendors: vendors_that_sell(item)
+    }
+  end
 end
