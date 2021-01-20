@@ -32,7 +32,8 @@ class VendorTest < Minitest::Test
     item = mock
 
     vendor.stock(item, 30)
-    inventory_hash = {item => 30}
+    vendor.stock(item, 25)
+    inventory_hash = {item => 55}
     assert_equal inventory_hash, vendor.inventory
   end
 end
