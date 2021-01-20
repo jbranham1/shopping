@@ -8,3 +8,4 @@ class VendorTest < Minitest::Test
 
     assert_instance_of Vendor, vendor
   end
+end
